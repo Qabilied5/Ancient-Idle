@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IDLE LEGENDS - RPG 2D</title>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Cinzel:wght@400;700;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="main-ui.css">
+</head>
+<body>
+
+<div id="notification"></div>
+
+<div id="header">
+  <h1 class="glitch">IDLE LEGENDS</h1>
+  <div class="subtitle">AUTO RPG ADVENTURE</div>
+</div>
+
+<div id="resources">
+  <div class="res-item">
+    <div class="res-icon gold"></div>
+    <span class="label">GOLD</span>
+    <span class="value" id="gold-display">0</span>
+  </div>
+  <div class="res-item">
+    <div class="res-icon gem"></div>
+    <span class="label">GEM</span>
+    <span class="value gem-val" id="gem-display">0</span>
+  </div>
+  <div class="res-item">
+    <div class="res-icon wave-ico"></div>
+    <span class="label">WAVE</span>
+    <span class="value wave-val" id="wave-display">1</span>
+  </div>
+  <div class="res-item">
+    <div class="res-icon" style="background: radial-gradient(circle, #60a5fa 30%, #1d4ed8 100%); box-shadow: 0 0 8px rgba(59,130,246,0.6);"></div>
+    <span class="label">PRESTIGE</span>
+    <span class="value" id="prestige-display" style="color:#60a5fa;">0</span>
+  </div>
+</div>
+
+<div id="main">
+  <!-- Hero Panel -->
+  <div class="panel" id="hero-panel">
+    <div class="panel-title">Hero</div>
+
+    <div class="hero-visual">
+      <div class="pixel-hero" id="pixel-hero">
+        <div class="ph-head"></div>
+        <div class="ph-body">
+          <div class="ph-sword"></div>
+        </div>
+        <div class="ph-legs">
+          <div class="ph-leg"></div>
+          <div class="ph-leg"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-name" id="hero-name">AETHER</div>
+    <div class="hero-class" id="hero-class">WANDERER</div>
+
+    <div class="level-badge">
+      <div class="lv-num" id="hero-level">LV.1</div>
+    </div>
+
+    <div class="stat-bar-row">
+      <div class="stat-bar-label">
+        <span>HP</span>
+        <span id="hp-text">100/100</span>
+      </div>
+      <div class="bar-track">
+        <div class="bar-fill hp" id="hp-bar" style="width:100%"></div>
+      </div>
+    </div>
+    <div class="stat-bar-row">
+      <div class="stat-bar-label">
+        <span>Mana</span>
+        <span id="mp-text">50/50</span>
+      </div>
+      <div class="bar-track">
+        <div class="bar-fill mp" id="mp-bar" style="width:100%"></div>
+      </div>
+    </div>
+    <div class="stat-bar-row">
+      <div class="stat-bar-label">
+        <span>EXP</span>
+        <span id="exp-text">0/100</span>
+      </div>
+      <div class="bar-track">
+        <div class="bar-fill xp" id="exp-bar" style="width:0%"></div>
+      </div>
+    </div>
+
+    <div class="hero-stats-grid">
+      <div class="stat-box">
+        <div class="stat-name">ATK</div>
+        <div class="stat-val" id="stat-atk">10</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-name">DEF</div>
+        <div class="stat-val" id="stat-def">5</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-name">SPD</div>
+        <div class="stat-val" id="stat-spd">1.0</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-name">CRIT</div>
+        <div class="stat-val" id="stat-crit">5%</div>
+      </div>
+    </div>
+
+    <div class="hero-skills-display">
+      <div class="skill-slots-container" id="equipped-skills-slots">
+        <div class="skill-slot empty"></div>
+        <div class="skill-slot empty"></div>
+        <div class="skill-slot empty"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Arena -->
+  <div class="panel" id="arena-panel">
+    <div class="idle-indicator" id="idle-status">AUTO BATTLE ACTIVE - IDLE MODE ON</div>
+    <div class="wave-info">
+      <div class="wave-title" id="wave-title">Wave 1 - Forest Slimes</div>
+      <div class="enemy-count" id="enemy-count">Enemies: 3/3</div>
+      <div style="display:flex;gap:6px;">
+        <button class="speed-btn active" id="speed-1x" onclick="setSpeed(1)">1x</button>
+        <button class="speed-btn" id="speed-2x" onclick="setSpeed(2)">2x</button>
+        <button class="speed-btn" id="speed-4x" onclick="setSpeed(4)">4x</button>
+      </div>
+    </div>
+
+    <div id="battle-arena">
+      <div class="arena-bg"></div>
+      <div class="arena-moon"></div>
+      <div class="arena-mountains">
+        <svg viewBox="0 0 800 80" preserveAspectRatio="none">
+          <polygon points="0,80 80,20 160,60 240,10 320,50 400,5 480,45 560,15 640,55 720,25 800,60 800,80" />
+        </svg>
+      </div>
+      <div class="arena-ground"></div>
+      <div class="battle-entities" id="battle-entities">
+        <!-- filled by JS -->
+      </div>
+    </div>
+
+    <div id="battle-log">
+      <div class="log-entry wave">[SYSTEM] Welcome to IDLE LEGENDS! Auto-battle has begun.</div>
+    </div>
+  </div>
+
+  <!-- Upgrade Panel -->
+  <div class="panel" id="upgrade-panel">
+    <div class="panel-title">Upgrade</div>
+    <div class="upgrade-tabs">
+      <button class="tab-btn active" onclick="switchTab('stats')">STATS</button>
+      <button class="tab-btn" onclick="switchTab('skills')">SKILLS</button>
+      <button class="tab-btn" onclick="switchTab('prestige')">PRESTIGE</button>
+    </div>
+
+    <div class="tab-content active" id="tab-stats">
+      <!-- Upgrades rendered by JS -->
+    </div>
+
+    <div class="tab-content" id="tab-skills">
+      <!-- Skills rendered by JS -->
+    </div>
+
+    <div class="tab-content" id="tab-prestige">
+      <!-- Prestige rendered by JS -->
+    </div>
+  </div>
+</div>
+
+<script src="logic.js"></script>
+</body>
+</html>
